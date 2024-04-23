@@ -1,10 +1,9 @@
 # Maintainer: Nico <d3sox at protonmail dot com>
 pkgname=anydesk-bin
-pkgver=6.3.1
-_pkgver_i686="6.0.1"
-pkgrel=3
+pkgver=6.3.2
+pkgrel=1
 pkgdesc="The Fast Remote Desktop Application"
-arch=('i686' 'x86_64')
+arch=('x86_64')
 url="https://anydesk.com"
 license=('custom')
 depends=('fakeroot' 'minizip' 'gtkglext' 'libglvnd' 'gtk2' 'libx11' 'glibc' 'glib2' 'gdk-pixbuf2' 'libxcb' 'cairo' 'pango' 'libxi' 'libxrender' 'libxrandr' 'libxtst' 'libxext' 'libxfixes' 'libxdamage' 'libxkbfile' 'gcc-libs' 'lsb-release' 'polkit')
@@ -12,27 +11,10 @@ optdepends=('libpulse: audio support' 'gnome-themes-extra: adwaita theme')
 conflicts=('anydesk')
 provides=('anydesk')
 options=('!strip')
-
-source_i686=("https://download.anydesk.com/linux/anydesk-${_pkgver_i686}-i386.tar.gz")
-source_x86_64=("https://download.anydesk.com/linux/anydesk-${pkgver}-amd64.tar.gz")
-
-sha256sums_i686=('cb22b026e2d81c0de220238fa3d4e13a6d0016787b8c680923794296bbd548e2')
-sha256sums_x86_64=('a9592cbdaebe11f01088e7b13fc3650d2091e406f6586b2e086e010fceeb95a8')
-
-pkgver() {
-    if [ `uname -m` != "x86_64" ]; then
-        printf "${_pkgver_i686}"
-    else
-        printf "${pkgver}"
-    fi
-}
+source=("https://download.anydesk.com/linux/anydesk-${pkgver}-amd64.tar.gz")
+sha256sums=('9d2638a8746c12f424e0cdc90c76a5024dc2e98db55a57c34361a9a7afe38ccb')
 
 package() {
-    if [ `uname -m` != "x86_64" ]; then
-        printf "%b" "\e[1;31m==> IMPORTANT: Support for 32bit operating systems has ended with version 6.1.0. We strongly recommend upgrading to 64bit operating system.\n"
-        printf "%b" "\e[1;31mThis package will install version 6.0.1 on 32bit systems which should not be used as it contains security vulnerabilities.\n"
-    fi
-
     # install binary
     install -Dm 755 "${srcdir}/anydesk-${pkgver}/anydesk" "${pkgdir}/usr/bin/anydesk"
 
